@@ -1,0 +1,121 @@
+.experience-section {
+    min-height: 80vh;
+    padding: 10vh 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    z-index: 5;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.timeline-container {
+    position: relative;
+    padding-left: 2rem;
+    margin-top: 3rem;
+    width: 100%;
+    /* The vertical line */
+    border-left: 1px solid rgba(76, 201, 240, 0.2); 
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 4rem;
+    padding-left: 2rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* The circular marker on the timeline */
+.timeline-marker {
+    position: absolute;
+    left: -2.35rem; /* Adjust based on padding and border width to center on the line */
+    top: 0.2rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--neon-blue);
+    background-color: var(--bg-dark); /* Match background so it looks hollow */
+    box-shadow: 0 0 10px var(--neon-blue);
+    z-index: 2;
+}
+
+.timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.timeline-date {
+    font-family: var(--font-mono);
+    color: var(--neon-blue);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-role {
+    font-size: 2rem;
+    color: #ffffff;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.timeline-company {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.timeline-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.timeline-bullets li {
+    color: #a0aec0;
+    font-size: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    line-height: 1.5;
+}
+
+.bullet-arrow {
+    color: var(--neon-blue); /* Distinctive cyan/blue arrow */
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1;
+    margin-top: 0.15rem;
+}
+
+@media (max-width: 768px) {
+    .experience-section {
+        padding: 5vh 5vw;
+    }
+    
+    .timeline-container {
+        padding-left: 1rem;
+    }
+    
+    .timeline-item {
+        padding-left: 1rem;
+    }
+    
+    .timeline-marker {
+        left: -1.35rem;
+    }
+
+    .timeline-role {
+        font-size: 1.5rem;
+    }
+}

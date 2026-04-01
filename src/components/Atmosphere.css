@@ -1,0 +1,214 @@
+.atmosphere-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -10;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Deep Gradient Sky */
+.atmosphere-sky {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background: radial-gradient(ellipse at top center, #0f172a 0%, #010409 80%);
+    will-change: transform;
+    z-index: -2;
+}
+
+/* Cyber Grid Net Layer */
+.cyber-grid {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background-image: 
+        linear-gradient(rgba(0, 245, 212, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 245, 212, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center center;
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 60%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 60%);
+    will-change: transform;
+    transform-origin: center;
+    opacity: 0.8;
+}
+
+/* Cinematic Multi-Layer Horizontal Fog */
+.ambient-fog {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    filter: blur(60px);
+    opacity: 0.45;
+    will-change: transform;
+}
+
+.ambient-fog.layer-1 {
+    background: radial-gradient(ellipse at 50% 100%, rgba(157, 78, 221, 0.1) 0%, transparent 60%);
+    animation: fogDriftH 45s infinite alternate ease-in-out;
+}
+
+.ambient-fog.layer-2 {
+    background: radial-gradient(ellipse at 80% 80%, rgba(0, 245, 212, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 70%, rgba(247, 37, 133, 0.05) 0%, transparent 50%);
+    animation: fogDriftH 35s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes fogDriftH {
+    0% { transform: translateX(-8%) translateY(0); }
+    100% { transform: translateX(8%) translateY(2%); }
+}
+
+/* Neon Kanji Signage */
+.kanji-signs {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-display); 
+    will-change: transform;
+}
+
+.kanji {
+    position: absolute;
+    font-weight: bold;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: -20px;
+    z-index: 1;
+}
+
+/* Color and position definitions. Anime.js handles opacity/flicker */
+.sign-1 { top: 5%; right: 8%; color: var(--neon-pink); font-size: 7rem; filter: blur(3px); text-shadow: 0 0 40px var(--neon-pink); }
+.sign-2 { top: 35%; left: 5%; color: var(--neon-cyan); font-size: 14rem; filter: blur(5px); text-shadow: 0 0 30px var(--neon-cyan); }
+.sign-3 { bottom: 15%; right: 28%; color: var(--neon-purple); font-size: 5rem; filter: blur(2px); text-shadow: 0 0 20px var(--neon-purple); }
+.sign-4 { top: 20%; left: 25%; color: var(--lantern-orange); font-size: 3rem; filter: blur(4px); text-shadow: 0 0 20px var(--lantern-orange); }
+.sign-5 { bottom: 5%; left: 15%; color: var(--neon-pink); font-size: 9rem; filter: blur(8px); }
+
+/* New atmospheric signs */
+.sign-6 { top: 15%; left: 45%; color: var(--neon-cyan); font-size: 4.5rem; filter: blur(3px); text-shadow: 0 0 15px var(--neon-cyan); opacity: 0.4; }
+.sign-7 { bottom: 30%; right: 12%; color: var(--neon-purple); font-size: 2.5rem; filter: blur(4px); text-shadow: 0 0 15px var(--neon-purple); }
+.sign-8 { top: 45%; left: 35%; color: var(--lantern-orange); font-size: 8rem; filter: blur(10px); text-shadow: 0 0 40px var(--lantern-orange); }
+.sign-9 { bottom: 40%; left: 8%; color: var(--neon-cyan); font-size: 1.5rem; filter: blur(1px); text-shadow: 0 0 10px var(--neon-cyan); }
+
+
+/* Ambient Deep Background Lanterns */
+.bg-lanterns {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    will-change: transform;
+}
+
+.bg-lantern {
+    position: absolute;
+    width: 40px;
+    height: 60px;
+    background: rgba(249, 115, 22, 0.15);
+    border-radius: 4px;
+    filter: blur(2px);
+}
+
+.bg-lantern::before {
+    content: '';
+    position: absolute;
+    top: -100vh; left: 50%; width: 1px; height: 100vh;
+    background: rgba(255,255,255,0.05);
+}
+
+.bg-lantern-glow {
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 60px 20px rgba(249, 115, 22, 0.3);
+    animation: gentlePulse 4s infinite alternate;
+}
+
+.bgl-1 { top: 15%; left: 15%; animation: bgSway 8s infinite alternate ease-in-out; }
+.bgl-2 { top: 40%; right: 10%; width: 30px; height: 45px; animation: bgSway 7s infinite alternate-reverse ease-in-out; opacity: 0.7; }
+.bgl-3 { top: 10%; left: 45%; width: 25px; height: 40px; animation: bgSway 10s infinite alternate ease-in-out; opacity: 0.5; filter: blur(4px);}
+
+@keyframes bgSway { 0% { transform: rotate(-5deg); } 100% { transform: rotate(5deg); } }
+@keyframes gentlePulse { 0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.9); } 100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); } }
+
+/* City / Torii Silhouettes */
+.city-silhouettes {
+    position: absolute;
+    bottom: -5vh; 
+    left: -5%;
+    width: 110%;
+    height: 25vh;
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1000 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path fill="%2301030d" d="M0,200 L0,150 L50,150 L50,120 L80,120 L80,160 L120,160 L120,80 L160,80 L160,110 L190,110 L190,170 L230,170 L230,90 L260,90 L260,130 L300,130 L300,60 L340,60 L340,140 L380,140 L380,50 L420,50 L420,100 L460,100 L460,180 L500,180 L500,70 L540,70 L540,150 L580,150 L580,90 L620,90 L620,160 L660,160 L660,40 L700,40 L700,100 L740,100 L740,130 L780,130 L780,60 L820,60 L820,150 L860,150 L860,80 L900,80 L900,140 L940,140 L940,50 L980,50 L980,200 Z"/></svg>');
+    background-size: cover;
+    background-position: bottom center;
+    background-repeat: repeat-x;
+    opacity: 0.8;
+    z-index: 2;
+    will-change: transform;
+}
+
+/* Film Grain / Noise Overlay */
+.atmosphere-noise {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0.035;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+    mix-blend-mode: overlay;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Floating Cyberpunk Data Fragments */
+.data-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 4;
+    will-change: transform;
+}
+
+.data-fragment {
+    position: absolute;
+    font-family: var(--font-mono);
+    color: var(--neon-cyan);
+    text-shadow: 0 0 8px rgba(0, 245, 212, 0.4);
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.wireframe-node {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--neon-pink);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(247, 37, 133, 0.5);
+    background: transparent;
+}
+
+
+/* Falling Sakura System (Controlled predominantly by Anime.js instead of CSS now) */
+.sakura-container {
+    position: absolute;
+    top: -10vh; left: -10vw; width: 120%; height: 120%;
+    z-index: 5;
+    will-change: transform;
+}
+
+.sakura-petal {
+    position: absolute;
+    top: 0; 
+    background: linear-gradient(135deg, #f43f5e, #fb7185);
+    border-radius: 12px 0 12px 0; 
+    box-shadow: 0 0 10px rgba(244, 63, 94, 0.6);
+    filter: blur(0.5px); 
+    will-change: transform; 
+}

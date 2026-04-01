@@ -1,0 +1,322 @@
+.hero-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.hero-parallax-bg {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background: radial-gradient(circle at center, transparent 30%, var(--bg-dark) 90%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Shared Background Template Sakura Branch Silhouette overlay */
+.sakura-branch {
+    position: absolute;
+    width: 700px;
+    height: 500px;
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg"><path fill="%23020610" d="M500,0 Q400,50 350,150 T200,250 T100,200 L120,210 Q220,280 370,180 T500,20 Z"/><circle cx="350" cy="150" r="15" fill="%23f72585"/><circle cx="360" cy="130" r="10" fill="%23f72585"/><circle cx="200" cy="250" r="18" fill="%23f72585"/><circle cx="220" cy="270" r="12" fill="%23f72585"/><circle cx="100" cy="200" r="15" fill="%23f72585"/><circle cx="80" cy="180" r="8" fill="%23f72585"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.95;
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.9)); /* Deep shadow for 3D feel */
+}
+
+/* Specific Prominent Top-Left Placement */
+.branch-top-left {
+    top: -8%;
+    left: -12%;
+    background-position: top left;
+}
+
+/* Subtle Right Placement */
+.branch-top-right {
+    top: -20%;
+    right: -25%;
+    background-position: top right;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.8)) blur(3px); /* Deeper out of focus */
+    opacity: 0.7;
+}
+
+/* Lantern System - Updated to cinematic warm Tokyo Orange */
+.lanterns-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.lantern {
+    position: absolute;
+    width: 65px;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(255, 125, 0, 0.4), rgba(255, 70, 0, 0.2)); 
+    border: 1px solid rgba(255, 125, 0, 0.6);
+    border-radius: 4px;
+    box-shadow: 
+        0 0 50px rgba(255, 125, 0, 0.4),
+        inset 0 0 30px rgba(255, 125, 0, 0.6);
+    transform-origin: top center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lantern-kanji {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 300;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px var(--lantern-orange);
+    opacity: 0.9;
+}
+
+/* Lantern Wire */
+.lantern::before {
+    content: '';
+    position: absolute;
+    top: -100vh;
+    left: 50%;
+    width: 2px;
+    height: 100vh;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1));
+}
+
+.lantern-left {
+    top: 18%;
+    left: 18%; 
+    animation: sway 7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate, flicker 5s infinite alternate;
+}
+
+.lantern-right {
+    top: 12%;
+    right: 8%;
+    width: 50px;
+    height: 90px;
+    filter: blur(1px); /* Depth of field */
+    animation: sway-offset 8.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate, flicker 4s infinite alternate-reverse;
+}
+
+.lantern-right .lantern-kanji { font-size: 1.8rem; }
+
+@keyframes sway {
+    0% { transform: rotate(-6deg); }
+    100% { transform: rotate(6deg); }
+}
+
+@keyframes sway-offset {
+    0% { transform: rotate(4deg); }
+    100% { transform: rotate(-5deg); }
+}
+
+@keyframes flicker {
+    0% { opacity: 0.85; box-shadow: 0 0 50px rgba(255, 125, 0, 0.4); }
+    50% { opacity: 1; box-shadow: 0 0 80px rgba(255, 125, 0, 0.7); }
+    100% { opacity: 0.75; box-shadow: 0 0 30px rgba(255, 125, 0, 0.3); }
+}
+
+/* Content */
+.hero-content {
+    text-align: center;
+    z-index: 5;
+    transition: transform 0.1s ease-out;
+}
+
+/* Japanese Identity Typing */
+.hero-katakana {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--neon-cyan);
+    font-size: 1.5rem;
+    letter-spacing: 12px;
+    margin-bottom: 2px;
+    font-weight: 300;
+}
+
+.katakana-letter {
+    display: inline-block;
+}
+
+.cyber-label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.85rem;
+    color: var(--neon-purple);
+    border: 1px solid rgba(157, 78, 221, 0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    letter-spacing: 4px;
+    background: rgba(15, 23, 42, 0.4);
+    box-shadow: 0 0 10px rgba(157, 78, 221, 0.1);
+    text-shadow: 0 0 5px rgba(157, 78, 221, 0.4);
+}
+
+.subtitle-kanji {
+    margin-top: 15px;
+}
+
+.hero-name {
+    font-family: var(--font-display);
+    font-size: 7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 12px;
+    margin-bottom: 10px;
+    line-height: 1.1;
+}
+
+.hero-letter {
+    display: inline-block;
+    opacity: 0; 
+}
+
+.hero-subtitle {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0; 
+}
+
+.typing-text {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px rgba(0, 245, 212, 0.5);
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid var(--neon-cyan); 
+    animation: typing 2.5s steps(40, end) 2.2s forwards, blink-caret 0.75s step-end infinite;
+    width: 0; 
+    opacity: 0.8;
+}
+
+.subtitle-brackets {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.6), transparent);
+    padding: 12px 40px;
+    border-top: 1px solid rgba(0, 245, 212, 0.15);
+    border-bottom: 1px solid rgba(0, 245, 212, 0.15);
+}
+
+.subtitle-roles { 
+    font-weight: 500; 
+    font-size: 1.1rem; 
+    letter-spacing: 4px; 
+    text-transform: uppercase;
+}
+
+.bracket-left, .bracket-right {
+    color: var(--neon-pink);
+    font-size: 1.8rem;
+    font-weight: 300;
+    text-shadow: 0 0 15px var(--neon-pink);
+    opacity: 0.8;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--neon-cyan); }
+}
+
+/* Scroll Indicator - Redesigned as a cinematic line */
+.scroll-indicator {
+    position: absolute;
+    bottom: 0vh; /* Attached to bottom */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 5;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.4s;
+}
+
+.scroll-indicator:hover { opacity: 1; text-shadow: 0 0 15px var(--neon-cyan); }
+
+.scroll-text {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--neon-cyan);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.mouse-line {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--neon-cyan), transparent);
+    position: relative;
+    overflow: hidden;
+}
+
+.mouse-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: #fff;
+    box-shadow: 0 0 10px #fff, 0 0 20px var(--neon-cyan);
+    animation: dropLine 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+@keyframes dropLine {
+    0% { transform: translateY(-100%); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(300%); opacity: 0; }
+}
+
+@media (max-width: 768px) {
+    .hero-name { font-size: 3.5rem; letter-spacing: 6px; }
+    .subtitle-brackets { font-size: 0.9rem; padding: 10px 15px; flex-direction: column; text-align: center; background: rgba(15, 23, 42, 0.6); border-radius: 8px;}
+    .lantern { transform: scale(0.6); right: 2%;}
+    .branch-top-left { left: -30%; }
+    .branch-top-right { right: -30%; }
+    .hero-stack-container { display: none; } /* Hide stack on very small screens */
+}
+
+/* Hero Stack Positioning */
+.hero-stack-container {
+    position: absolute;
+    bottom: 5vh;
+    left: 4vw;
+    width: 200px;
+    height: 200px;
+    z-index: 15;
+    transform: translateY(10px);
+    transition: transform 0.4s ease, filter 0.4s ease;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+}
+
+.hero-stack-container:hover {
+    transform: translateY(0px) scale(1.02);
+    filter: drop-shadow(0 15px 25px rgba(0, 245, 212, 0.2));
+}
