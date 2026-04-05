@@ -13,7 +13,7 @@ const getRGBA = (cssColor, fallback = 'rgba(180,180,180,1)') => {
         const computed = window.getComputedStyle(el).color;
         document.body.removeChild(el);
         return computed || fallback;
-    } catch {
+    } catch (_e) {
         return fallback;
     }
 };
