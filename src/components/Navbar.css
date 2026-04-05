@@ -1,109 +1,159 @@
-.cyber-navbar {
+/* ───────────────────────────────────────────
+   Floating Dock Navbar  (replaces old Navbar)
+─────────────────────────────────────────── */
+
+.cyber-dock-nav {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 70px;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
+    opacity: 0; /* anime.js will reveal */
+    pointer-events: none; /* blocked until opacity > 0 */
+}
+
+
+/* The pill container */
+.cyber-dock {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0 5vw;
-    opacity: 0; /* anime will reveal */
-    
-    transition: background 0.4s ease, border-bottom 0.4s ease, box-shadow 0.4s ease;
-    border-bottom: 1px solid transparent;
+    gap: 4px;
+    padding: 10px 16px;
+    border-radius: 20px;
+
+    /* Glassmorphism */
+    background: linear-gradient(
+        135deg,
+        rgba(2, 6, 23, 0.88),
+        rgba(15, 23, 42, 0.80)
+    );
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    /* Cyan-tinted border */
+    border: 1px solid rgba(0, 245, 212, 0.18);
+    border-top: 1px solid rgba(0, 245, 212, 0.30);
+    border-left: 1px solid rgba(0, 245, 212, 0.22);
+
+    /* Multi-layer shadow */
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(0, 245, 212, 0.06) inset,
+        0 0 40px rgba(0, 245, 212, 0.04);
+
+    transition: box-shadow 0.3s ease;
 }
 
-/* Glassmorphism activation on scroll */
-.cyber-navbar.scrolled {
-    background: linear-gradient(180deg, rgba(2, 6, 23, 0.95), rgba(15, 23, 42, 0.85));
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 245, 212, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 245, 212, 0.05);
+.cyber-dock:hover {
+    box-shadow:
+        0 12px 48px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(0, 245, 212, 0.10) inset,
+        0 0 60px rgba(0, 245, 212, 0.08);
 }
 
-.nav-logo {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 800;
-    color: #fff;
-    cursor: pointer; /* we'll use custom cursor, but logical intent */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    transition: transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.nav-logo:hover {
-    transform: scale(1.1);
-    text-shadow: 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink);
-}
-
-.logo-glow {
-    color: var(--neon-pink);
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-item {
+/* Individual icon buttons */
+.dock-item {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.nav-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
     background: transparent;
     border: none;
     outline: none;
-    color: #e2e8f0;
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    position: relative;
-    padding: 10px 5px;
-    transition: color 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: none; /* project uses custom cursor */
+    color: rgba(226, 232, 240, 0.70);
+    transition:
+        background 0.22s ease,
+        color 0.22s ease;
 }
 
-.nav-btn:hover {
+.dock-item:hover {
+    background: rgba(0, 245, 212, 0.08);
     color: var(--neon-cyan);
-    transform: translateY(-2px);
 }
 
-/* Underline sweeping effect */
-.nav-btn::after {
+.dock-item:hover .dock-icon {
+    filter: drop-shadow(0 0 6px rgba(0, 245, 212, 0.7));
+}
+
+.dock-icon {
+    transition: filter 0.22s ease;
+}
+
+/* Tooltip above each icon */
+.dock-tooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+
+    padding: 5px 10px;
+    border-radius: 8px;
+
+    background: rgba(2, 6, 23, 0.92);
+    border: 1px solid rgba(0, 245, 212, 0.20);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--neon-cyan);
+    white-space: nowrap;
+    pointer-events: none;
+
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+
+.dock-item:hover .dock-tooltip {
+    opacity: 1;
+}
+
+/* Arrow pointer */
+.dock-tooltip::after {
     content: '';
     position: absolute;
-    bottom: 5px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: var(--neon-cyan);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease;
-    box-shadow: 0 0 8px var(--neon-cyan);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 245, 212, 0.25);
 }
 
-.nav-btn:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
+.dock-kanji {
+    font-size: 0.62rem;
+    opacity: 0.55;
+    letter-spacing: 0.04em;
+    color: #e2e8f0;
 }
 
-/* Add Magnetic Text class logic for all general magnetic text pulls across project */
-.magnetic-text {
-    display: inline-block;
-    will-change: transform;
+/* ────── Separator dot between groups (optional – remove if not wanted) ────── */
+.dock-separator {
+    width: 1px;
+    height: 26px;
+    background: rgba(0, 245, 212, 0.15);
+    margin: 0 4px;
+    border-radius: 1px;
 }
 
-@media (max-width: 768px) {
-    .nav-links {
-        display: none; /* Hide on mobile for now, would need a hamburger menu */
+/* Mobile: keep dock but scale it a bit */
+@media (max-width: 600px) {
+    .cyber-dock {
+        padding: 8px 10px;
+        gap: 2px;
+    }
+    .dock-item {
+        width: 40px;
+        height: 40px;
     }
 }

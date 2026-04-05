@@ -1,57 +1,53 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import anime from "animejs";
-import { useMagneticHover } from '../hooks/useMagneticHover';
+import { motion } from 'framer-motion';
+import { Home, Terminal, Briefcase, FolderKanban, Mail } from 'lucide-react';
+import anime from 'animejs';
 import './Navbar.css';
 
+const navItems = [
+    { icon: Home,          label: 'Home',       id: 'home',       kanji: 'ホーム' },
+    { icon: Terminal,      label: 'Terminal',   id: 'terminal',   kanji: '端末' },
+    { icon: Briefcase,     label: 'Experience', id: 'experience', kanji: '経験' },
+    { icon: FolderKanban,  label: 'Projects',   id: 'projects',   kanji: '計画' },
+    { icon: Mail,          label: 'Contact',    id: 'contact',    kanji: '連絡' },
+];
+
+const floatingAnimation = {
+    initial: { y: 0 },
+    animate: {
+        y: [-3, 3, -3],
+        transition: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+    },
+};
+
 const Navbar = () => {
-    const navRef = useRef(null);
-    const [scrolled, setScrolled] = useState(false);
-    const navigate = useNavigate();
-    const location = useLocation();
+    const dockRef = useRef(null);
+    const navigate  = useNavigate();
+    const location  = useLocation();
 
-    const navItems = [
-        { name: "Home", id: "home", kanji: "ホーム" },
-        { name: "Terminal", id: "terminal", kanji: "端末" },
-        { name: "Experience", id: "experience", kanji: "経験" },
-        { name: "Projects", id: "projects", kanji: "計画" },
-        { name: "Contact", id: "contact", kanji: "連絡" }
-    ];
-
+    // Fade-in orchestrated with IntroSequence
     useEffect(() => {
-        // Fade in on load (orchestrated closely with IntroSequence)
-        if (navRef.current) {
+        if (dockRef.current) {
+            const el = dockRef.current;
             anime({
-                targets: navRef.current,
-                translateY: [-50, 0],
+                targets: el,
+                translateY: [60, 0],
                 opacity: [0, 1],
-                duration: 1500,
-                delay: 2500, // Waits for particle intro
-                easing: 'easeOutExpo'
+                duration: 1400,
+                delay: 2600,
+                easing: 'easeOutExpo',
+                complete: () => { el.style.pointerEvents = 'auto'; },
             });
         }
-
-        // Scroll highlight listener
-        const handleScroll = () => {
-            if (window.scrollY > 50) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Handle cross-page scroll
     useEffect(() => {
         if (location.pathname === '/' && location.state?.scrollTo) {
             setTimeout(() => {
                 const el = document.getElementById(location.state.scrollTo);
-                if (el) {
-                    el.scrollIntoView({ behavior: 'smooth' });
-                }
-                // Clear state
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
                 window.history.replaceState({}, document.title);
             }, 100);
         }
@@ -62,31 +58,35 @@ const Navbar = () => {
             navigate('/', { state: { scrollTo: id } });
         } else {
             const el = document.getElementById(id);
-            if (el) {
-                el.scrollIntoView({ behavior: 'smooth' });
-            }
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
         }
     };
 
     return (
-        <nav ref={navRef} className={`cyber-navbar ${scrolled ? 'scrolled' : ''}`}>
-            <div className="nav-logo" onClick={() => handleScrollTo('home')}>
-                <span className="logo-j">K</span><span className="logo-glow">.</span>
-            </div>
-
-            <ul className="nav-links">
-                {navItems.map((item, i) => (
-                    <li key={i} className="nav-item">
-                        <button 
-                            className="nav-btn magnetic-text"
-                            onClick={() => handleScrollTo(item.id)}
-                            data-text={item.name}
-                        >
-                            {item.name} <span className="nav-kanji-subtitle" aria-hidden="true" style={{ fontSize: '0.65em', opacity: 0.6, marginLeft: '6px' }}>{item.kanji}</span>
-                        </button>
-                    </li>
+        <nav ref={dockRef} className="cyber-dock-nav" aria-label="Main navigation">
+            <motion.div
+                initial="initial"
+                animate="animate"
+                variants={floatingAnimation}
+                className="cyber-dock"
+            >
+                {navItems.map(({ icon: Icon, label, id, kanji }) => (
+                    <motion.button
+                        key={id}
+                        whileHover={{ scale: 1.15, y: -4 }}
+                        whileTap={{ scale: 0.92 }}
+                        onClick={() => handleScrollTo(id)}
+                        className="dock-item"
+                        aria-label={label}
+                    >
+                        <Icon className="dock-icon" size={20} strokeWidth={1.6} />
+                        <span className="dock-tooltip">
+                            {label}
+                            <span className="dock-kanji">{kanji}</span>
+                        </span>
+                    </motion.button>
                 ))}
-            </ul>
+            </motion.div>
         </nav>
     );
 };
