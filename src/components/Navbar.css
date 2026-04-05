@@ -4,7 +4,7 @@
 
 .cyber-dock-nav {
     position: fixed;
-    bottom: 28px;
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
@@ -83,10 +83,10 @@
     transition: filter 0.22s ease;
 }
 
-/* Tooltip above each icon */
+/* Tooltip below each icon (dock is at top of screen) */
 .dock-tooltip {
     position: absolute;
-    bottom: calc(100% + 12px);
+    top: calc(100% + 12px);
     left: 50%;
     transform: translateX(-50%);
 
@@ -119,15 +119,15 @@
     opacity: 1;
 }
 
-/* Arrow pointer */
+/* Arrow pointer (pointing up to the icon) */
 .dock-tooltip::after {
     content: '';
     position: absolute;
-    top: 100%;
+    bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
     border: 5px solid transparent;
-    border-top-color: rgba(0, 245, 212, 0.25);
+    border-bottom-color: rgba(0, 245, 212, 0.25);
 }
 
 .dock-kanji {

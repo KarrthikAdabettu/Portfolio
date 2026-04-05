@@ -26,13 +26,13 @@ const Navbar = () => {
     const navigate  = useNavigate();
     const location  = useLocation();
 
-    // Fade-in orchestrated with IntroSequence
+    // Fade-in orchestrated with IntroSequence (slides down from above)
     useEffect(() => {
         if (dockRef.current) {
             const el = dockRef.current;
             anime({
                 targets: el,
-                translateY: [60, 0],
+                translateY: [-60, 0],
                 opacity: [0, 1],
                 duration: 1400,
                 delay: 2600,
