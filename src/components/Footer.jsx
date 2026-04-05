@@ -1,33 +1,27 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import * as Color from 'color-bits';
+
 import { Github, Linkedin, Mail } from 'lucide-react';
 import './Footer.css';
 
-/* ───────────── Color helpers (ported from flickering-footer) ───────────── */
+/* ───────────── Color helpers (native — no external deps) ───────────── */
 const getRGBA = (cssColor, fallback = 'rgba(180,180,180,1)') => {
     if (typeof window === 'undefined' || !cssColor) return fallback;
     try {
-        if (typeof cssColor === 'string' && cssColor.startsWith('var(')) {
-            const el = document.createElement('div');
-            el.style.color = cssColor;
-            document.body.appendChild(el);
-            const computed = window.getComputedStyle(el).color;
-            document.body.removeChild(el);
-            return Color.formatRGBA(Color.parse(computed));
-        }
-        return Color.formatRGBA(Color.parse(cssColor));
+        const el = document.createElement('div');
+        el.style.color = cssColor;
+        document.body.appendChild(el);
+        const computed = window.getComputedStyle(el).color;
+        document.body.removeChild(el);
+        return computed || fallback;
     } catch {
         return fallback;
     }
 };
 
 const colorWithOpacity = (color, opacity) => {
-    if (!color.startsWith('rgb')) return color;
-    try {
-        return Color.formatRGBA(Color.alpha(Color.parse(color), opacity));
-    } catch {
-        return color;
-    }
+    const m = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+    if (!m) return color;
+    return `rgba(${m[1]}, ${m[2]}, ${m[3]}, ${opacity})`;
 };
 
 /* ───────────────────────── FlickeringGrid canvas ───────────────────────── */
